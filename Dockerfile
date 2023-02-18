@@ -1,14 +1,9 @@
-# Use the official Nginx image as the base image
-FROM nginx
+FROM openjdk:17
 
-# Copy the Nginx configuration file into the container
-COPY nginx.conf /etc/nginx/nginx.conf
+WORKDIR /app
 
-# Copy the static files from the build stage into the container
-COPY ./dist /usr/share/nginx/html
+COPY blog/target/blog-0.0.1-SNAPSHOT.jar .
 
-# Expose the ports that Nginx will listen on
-EXPOSE 80 443
+EXPOSE 8080
 
-# Start Nginx when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["java", "-jar", "blog-0.0.1-SNAPSHOT.jar"]
